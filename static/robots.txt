@@ -1,0 +1,6 @@
+# Robots.txt for ResumeCraft
+User-agent: *
+Allow: /
+
+# Sitemap URL
+Sitemap: https://resume-generator-kaea.vercel.app/sitemap.xml

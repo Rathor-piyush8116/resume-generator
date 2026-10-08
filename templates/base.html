@@ -3,10 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ResumeCraft – Resume Generator & AI Optimizer{% endblock %}</title>
+    <title>{% block title %}ResumeCraft – Free AI Resume Builder & ATS Resume Generator{% endblock %}</title>
     
-    <!-- Meta tags for SEO & descriptions -->
-    <meta name="description" content="ResumeCraft: ATS-friendly resume builder with live preview, multiple professional templates, AI resume optimization, and SQLite database storage.">
+    <!-- Primary SEO Meta Tags -->
+    <meta name="title" content="ResumeCraft – Free AI Resume Builder & ATS Resume Generator">
+    <meta name="description" content="Build professional, ATS-compliant resumes with real-time live preview, 5 modern templates, AI ATS score diagnostics, instant summary enhancer, and one-click PDF export. 100% free with persistent database drafts.">
+    <meta name="keywords" content="resume builder, ai resume generator, ats resume checker, free cv maker, professional resume templates, software engineer resume, entry level resume builder, ats score checker, instant pdf resume, latex resume alternative">
+    <meta name="author" content="Piyush Rathor">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="canonical" href="https://resume-generator-kaea.vercel.app/">
+    
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.svg') }}">
+    
+    <!-- Open Graph / Facebook / LinkedIn Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://resume-generator-kaea.vercel.app/">
+    <meta property="og:title" content="ResumeCraft – Free AI Resume Builder & ATS Resume Generator">
+    <meta property="og:description" content="Build recruiter-ready, ATS-compliant resumes with real-time live preview, AI summary & bullet points optimizer, 5 modern templates, and instant PDF export.">
+    <meta property="og:image" content="https://resume-generator-kaea.vercel.app/static/favicon.svg">
+    <meta property="og:site_name" content="ResumeCraft">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://resume-generator-kaea.vercel.app/">
+    <meta name="twitter:title" content="ResumeCraft – Free AI Resume Builder & ATS Resume Generator">
+    <meta name="twitter:description" content="Build ATS-optimized resumes with 5 professional templates, live preview & AI enhancements. 100% free with instant PDF export.">
+    <meta name="twitter:image" content="https://resume-generator-kaea.vercel.app/static/favicon.svg">
+    
+    <!-- Schema.org JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://resume-generator-kaea.vercel.app/#webapp",
+          "name": "ResumeCraft",
+          "url": "https://resume-generator-kaea.vercel.app/",
+          "description": "Free AI-powered ATS resume builder with real-time preview, 5 professional templates, AI diagnostics, and one-click PDF export.",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "All (Web Browser)",
+          "browserRequirements": "Requires JavaScript. Requires HTML5.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": [
+            "Real-time live A4 resume preview",
+            "5 Industry standard ATS templates",
+            "AI ATS scoring engine with actionable checklist",
+            "AI professional summary generator",
+            "In-demand tech skills suggester",
+            "Persistent SQLite draft saving and versioning",
+            "High quality clean PDF and print export"
+          ],
+          "author": {
+            "@type": "Person",
+            "name": "Piyush Rathor",
+            "url": "https://github.com/Rathor-piyush8116"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://resume-generator-kaea.vercel.app/#website",
+          "url": "https://resume-generator-kaea.vercel.app/",
+          "name": "ResumeCraft",
+          "description": "Free AI Resume Generator & ATS Resume Optimizer",
+          "publisher": {
+            "@type": "Person",
+            "name": "Piyush Rathor"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Is ResumeCraft completely free to use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, ResumeCraft is 100% free and open-source. You can build, customize, AI-optimize, and export unlimited resumes without paywalls or hidden subscriptions."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are the generated resumes ATS-friendly?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! All 5 resume templates (Modern Clean, Classic Ivy, Tech Minimalist, Executive Sleek, and Compact Split) are structured with clean semantic typography, standard section headings, and machine-readable layouts designed to achieve 90%+ ATS parse rates."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does the AI ATS Score Diagnostic work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ResumeCraft's built-in AI NLP engine parses your resume in real time, inspecting contact info, summary strength, metrics in bullets, skill count, and section completeness to calculate a 0-100% score with prioritized improvement suggestions."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I download my resume as a PDF?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Simply click the 'Print / PDF' button in the top navigation or press Cmd+P (Mac) / Ctrl+P (Windows). The custom print stylesheet strips all web UI controls and exports a pristine A4 resume document."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
     
     <!-- Google Fonts: Inter, Outfit, Merriweather (for Classic), JetBrains Mono (for Tech) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,45 +143,110 @@
                 </div>
                 <div>
                     <h1 class="brand-title">ResumeCraft</h1>
-                    <span class="brand-subtitle">AI-Powered Resume Generator</span>
+                    <span class="brand-subtitle">AI-Powered ATS Resume Generator</span>
                 </div>
             </div>
             
             <div class="header-actions">
                 <!-- AI Optimizer Trigger -->
-                <button type="button" id="btn-open-ats-modal" class="btn btn-ai" title="Check ATS Score & Get AI Recommendations">
+                <button type="button" id="btn-open-ats-modal" class="btn btn-ai" title="Check ATS Score & Get AI Recommendations" aria-label="Check ATS Score">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> AI ATS Score <span id="header-ats-pill" class="ats-pill">85%</span>
                 </button>
 
                 <!-- Database Actions -->
-                <button type="button" id="btn-save-resume-db" class="btn btn-secondary" title="Save resume to database">
+                <button type="button" id="btn-save-resume-db" class="btn btn-secondary" title="Save resume to database" aria-label="Save Resume">
                     <i class="fa-solid fa-floppy-disk"></i> Save Resume
                 </button>
-                <button type="button" id="btn-open-my-resumes" class="btn btn-secondary" title="Manage saved resumes">
+                <button type="button" id="btn-open-my-resumes" class="btn btn-secondary" title="Manage saved resumes" aria-label="Open My Resumes">
                     <i class="fa-solid fa-folder-open"></i> My Resumes (<span id="saved-count-badge">0</span>)
                 </button>
 
                 <!-- Utility Actions -->
-                <button type="button" id="btn-load-sample" class="btn btn-outline-secondary" title="Fill form with sample data">
+                <button type="button" id="btn-load-sample" class="btn btn-outline-secondary" title="Fill form with sample data" aria-label="Load Sample Data">
                     <i class="fa-solid fa-file-lines"></i> Sample Data
                 </button>
-                <button type="button" id="btn-clear-form" class="btn btn-outline-danger" title="Clear all input fields">
+                <button type="button" id="btn-clear-form" class="btn btn-outline-danger" title="Clear all input fields" aria-label="Reset Form">
                     <i class="fa-solid fa-rotate-left"></i> Reset
                 </button>
-                <button type="button" id="btn-print-resume" class="btn btn-primary" title="Print or save as PDF">
+                <button type="button" id="btn-print-resume" class="btn btn-primary" title="Print or save as PDF" aria-label="Export PDF or Print">
                     <i class="fa-solid fa-print"></i> Print / PDF
                 </button>
+                
+                <!-- GitHub Repository Link -->
+                <a href="https://github.com/Rathor-piyush8116/resume-generator" target="_blank" rel="noopener noreferrer" class="btn btn-github" title="View Source on GitHub" aria-label="GitHub Repository">
+                    <i class="fa-brands fa-github"></i> <span class="gh-text">GitHub</span>
+                </a>
             </div>
         </div>
     </header>
 
     <!-- Main Content Area -->
-    <main class="main-wrapper">
+    <main class="main-wrapper" id="main-content">
         {% block content %}{% endblock %}
     </main>
 
+    <!-- SEO & Informative Crawlable Footer -->
+    <footer class="app-footer no-print">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col brand-col">
+                    <div class="footer-brand">
+                        <i class="fa-solid fa-file-invoice footer-icon"></i>
+                        <span class="footer-brand-name">ResumeCraft</span>
+                    </div>
+                    <p class="footer-desc">
+                        A modern, open-source, AI-powered resume builder designed to help students, developers, and professionals craft ATS-friendly resumes that stand out.
+                    </p>
+                    <div class="footer-badges">
+                        <span class="seo-badge"><i class="fa-solid fa-shield-check"></i> 100% Free & Open Source</span>
+                        <span class="seo-badge"><i class="fa-solid fa-bolt"></i> Real-Time Live Sync</span>
+                        <span class="seo-badge"><i class="fa-solid fa-robot"></i> AI ATS Diagnostics</span>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-heading">Resume Templates</h3>
+                    <ul class="footer-links">
+                        <li><a href="#resume-sheet">Modern Clean (Sans-serif)</a></li>
+                        <li><a href="#resume-sheet">Classic Ivy (ATS High-Pass)</a></li>
+                        <li><a href="#resume-sheet">Tech Minimalist (Code Mono)</a></li>
+                        <li><a href="#resume-sheet">Executive Sleek (Corporate)</a></li>
+                        <li><a href="#resume-sheet">Compact Split (2-Column)</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-heading">AI Optimization Tools</h3>
+                    <ul class="footer-links">
+                        <li><a href="javascript:void(0)" onclick="document.getElementById('btn-open-ats-modal').click();">ATS Score Analyzer</a></li>
+                        <li><a href="javascript:void(0)" onclick="document.getElementById('btn-trigger-ai-summary').click();">AI Summary Enhancer</a></li>
+                        <li><a href="javascript:void(0)" onclick="document.getElementById('btn-trigger-ai-skills').click();">Tech Skills Suggester</a></li>
+                        <li><a href="#faq-section">Resume Writing Guide & FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-heading">Project & Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/Rathor-piyush8116/resume-generator" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub Repository</a></li>
+                        <li><a href="https://resume-generator-kaea.vercel.app/" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-globe"></i> Live Deployment</a></li>
+                        <li><a href="/sitemap.xml" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-sitemap"></i> XML Sitemap</a></li>
+                        <li><a href="/robots.txt" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-robot"></i> Robots.txt</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 ResumeCraft. Created by <a href="https://github.com/Rathor-piyush8116" target="_blank" rel="noopener noreferrer">Piyush Rathor</a>. Built with Python, Flask, and Vanilla JS.</p>
+                <div class="footer-bottom-links">
+                    <span>Privacy First – All Drafts Stored Locally</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <!-- Toast Notification Container -->
-    <div id="toast-container" class="toast-container no-print"></div>
+    <div id="toast-container" class="toast-container no-print" aria-live="polite"></div>
 
     <!-- Modals (Database, AI Optimization, ATS) -->
     {% include "modals.html" %}

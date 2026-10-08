@@ -8,7 +8,7 @@ Includes:
 - AI Resume Optimization API (ATS Scoring, Summary Optimization, Bullet Polish, Skill Suggestions)
 """
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from database import init_db, save_resume, get_all_resumes, get_resume_by_id, delete_resume_by_id
 from ai_optimizer import (
     optimize_summary,
@@ -24,12 +24,27 @@ app = Flask(__name__)
 init_db()
 
 # -------------------------------------------------------------
-# Web Page Route
+# Web Page & SEO Routes
 # -------------------------------------------------------------
 @app.route('/')
 def home():
     """Renders the main interactive resume builder page."""
     return render_template('index.html')
+
+@app.route('/robots.txt')
+def robots():
+    """Serves robots.txt for search engine crawlers."""
+    return send_from_directory('static', 'robots.txt', mimetype='text/plain')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    """Serves XML sitemap for search engine indexing."""
+    return send_from_directory('static', 'sitemap.xml', mimetype='application/xml')
+
+@app.route('/favicon.ico')
+def favicon():
+    """Serves favicon icon."""
+    return send_from_directory('static', 'favicon.svg', mimetype='image/svg+xml')
 
 # -------------------------------------------------------------
 # Database API Endpoints (Persistent Storage)
