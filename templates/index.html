@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="app-layout">
+    <!-- LEFT PANEL: Interactive Input Form -->
+    <aside class="form-panel no-print">
+        <div class="panel-header">
+            <div>
+                <h2><i class="fa-solid fa-pen-to-square"></i> Resume Details</h2>
+                <p class="panel-subtitle">Edit fields below. The preview updates instantly.</p>
+            </div>
+            <div class="active-doc-badge" id="active-doc-status" title="Active resume status">
+                <i class="fa-solid fa-file"></i> <span id="current-doc-name">Untitled Draft</span>
+            </div>
+        </div>
+
+        <form id="resume-form" onsubmit="event.preventDefault();" novalidate>
+            
+            <!-- SECTION 1: Personal Information -->
+            <fieldset class="form-section">
+                <legend class="section-title">
+                    <i class="fa-solid fa-user"></i> 1. Personal Information
+                </legend>
+                
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="fullName">Full Name <span class="required">*</span></label>
+                        <input type="text" id="fullName" name="fullName" placeholder="e.g. Alex Sharma" required autocomplete="name">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="professionalTitle">Professional Title / Headline <span class="required">*</span></label>
+                        <input type="text" id="professionalTitle" name="professionalTitle" placeholder="e.g. Computer Science Student | Aspiring Software Engineer">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="e.g. alex.sharma@example.com" autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="e.g. +91 98765 43210" autocomplete="tel">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" name="location" placeholder="e.g. Bengaluru, India">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="linkedin">LinkedIn Profile URL</label>
+                        <input type="url" id="linkedin" name="linkedin" placeholder="e.g. linkedin.com/in/alexsharma">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="github">GitHub Profile URL</label>
+                        <input type="url" id="github" name="github" placeholder="e.g. github.com/alexsharma">
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- SECTION 2: Professional Summary with AI Trigger -->
+            <fieldset class="form-section">
+                <div class="section-header-flex">
+                    <legend class="section-title">
+                        <i class="fa-solid fa-file-lines"></i> 2. Professional Summary
+                    </legend>
+                    <button type="button" class="btn-ai-small" id="btn-trigger-ai-summary" title="Generate AI optimized summaries">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> AI Enhance
+                    </button>
+                </div>
+                <div class="form-group full-width">
+                    <label for="summary">About Me / Career Objective</label>
+                    <textarea id="summary" name="summary" rows="4" placeholder="Passionate Computer Science student with a strong foundation in data structures, algorithms, and web development. Eager to contribute to high-impact projects..."></textarea>
+                </div>
+            </fieldset>
+
+            <!-- SECTION 3: Education -->
+            <fieldset class="form-section">
+                <div class="section-header-flex">
+                    <legend class="section-title">
+                        <i class="fa-solid fa-graduation-cap"></i> 3. Education
+                    </legend>
+                    <button type="button" class="btn-add-item" id="btn-add-education">
+                        <i class="fa-solid fa-plus"></i> Add Education
+                    </button>
+                </div>
+                <div id="education-container" class="dynamic-list-container">
+                    <!-- Dynamic Education Cards injected via JavaScript -->
+                </div>
+            </fieldset>
+
+            <!-- SECTION 4: Skills with AI Suggester Trigger -->
+            <fieldset class="form-section">
+                <div class="section-header-flex">
+                    <legend class="section-title">
+                        <i class="fa-solid fa-code"></i> 4. Technical & Soft Skills
+                    </legend>
+                    <button type="button" class="btn-ai-small" id="btn-trigger-ai-skills" title="Explore in-demand skills for tech roles">
+                        <i class="fa-solid fa-lightbulb"></i> AI Suggest Skills
+                    </button>
+                </div>
+                <div class="form-group full-width">
+                    <label for="skillsInput">Skills (Enter skills separated by commas)</label>
+                    <input type="text" id="skillsInput" placeholder="e.g. Python, C++, HTML5, CSS3, JavaScript, Flask, Git, Problem Solving">
+                    <small class="helper-text">Type comma-separated skills or use AI Suggest Skills to insert them.</small>
+                </div>
+            </fieldset>
+
+            <!-- SECTION 5: Projects -->
+            <fieldset class="form-section">
+                <div class="section-header-flex">
+                    <legend class="section-title">
+                        <i class="fa-solid fa-laptop-code"></i> 5. Projects
+                    </legend>
+                    <button type="button" class="btn-add-item" id="btn-add-project">
+                        <i class="fa-solid fa-plus"></i> Add Project
+                    </button>
+                </div>
+                <div id="projects-container" class="dynamic-list-container">
+                    <!-- Dynamic Project Cards injected via JavaScript -->
+                </div>
+            </fieldset>
+
+            <!-- SECTION 6: Work / Internship Experience -->
+            <fieldset class="form-section">
+                <div class="section-header-flex">
+                    <legend class="section-title">
+                        <i class="fa-solid fa-briefcase"></i> 6. Experience
+                    </legend>
+                    <button type="button" class="btn-add-item" id="btn-add-experience">
+                        <i class="fa-solid fa-plus"></i> Add Experience
+                    </button>
+                </div>
+                <div id="experience-container" class="dynamic-list-container">
+                    <!-- Dynamic Experience Cards injected via JavaScript -->
+                </div>
+            </fieldset>
+
+            <!-- SECTION 7: Certifications -->
+            <fieldset class="form-section">
+                <div class="section-header-flex">
+                    <legend class="section-title">
+                        <i class="fa-solid fa-award"></i> 7. Certifications
+                    </legend>
+                    <button type="button" class="btn-add-item" id="btn-add-certification">
+                        <i class="fa-solid fa-plus"></i> Add Certification
+                    </button>
+                </div>
+                <div id="certifications-container" class="dynamic-list-container">
+                    <!-- Dynamic Certification Cards injected via JavaScript -->
+                </div>
+            </fieldset>
+
+            <!-- SECTION 8: Achievements -->
+            <fieldset class="form-section">
+                <div class="section-header-flex">
+                    <legend class="section-title">
+                        <i class="fa-solid fa-trophy"></i> 8. Achievements
+                    </legend>
+                    <button type="button" class="btn-add-item" id="btn-add-achievement">
+                        <i class="fa-solid fa-plus"></i> Add Achievement
+                    </button>
+                </div>
+                <div id="achievements-container" class="dynamic-list-container">
+                    <!-- Dynamic Achievement Cards injected via JavaScript -->
+                </div>
+            </fieldset>
+        </form>
+    </aside>
+
+    <!-- RIGHT PANEL: Live Resume Preview + Template Switcher -->
+    <section class="preview-panel">
+        
+        <!-- TEMPLATE SWITCHER & COLOR PICKER TOOLBAR -->
+        <div class="template-customizer-card no-print">
+            <div class="customizer-header">
+                <span class="customizer-title"><i class="fa-solid fa-palette"></i> Resume Template & Theme:</span>
+                
+                <!-- Color Theme Palette -->
+                <div class="color-palette-picker" title="Select Accent Color">
+                    <button type="button" class="color-dot active" data-color="#2563eb" style="background-color: #2563eb;" title="Electric Blue"></button>
+                    <button type="button" class="color-dot" data-color="#059669" style="background-color: #059669;" title="Emerald Green"></button>
+                    <button type="button" class="color-dot" data-color="#7c3aed" style="background-color: #7c3aed;" title="Royal Purple"></button>
+                    <button type="button" class="color-dot" data-color="#e11d48" style="background-color: #e11d48;" title="Crimson Rose"></button>
+                    <button type="button" class="color-dot" data-color="#334155" style="background-color: #334155;" title="Slate Onyx"></button>
+                </div>
+            </div>
+
+            <!-- Visual Template Buttons -->
+            <div class="template-selector-tabs">
+                <button type="button" class="template-tab active" data-template="modern">
+                    <i class="fa-solid fa-table-columns"></i>
+                    <span>Modern Clean</span>
+                </button>
+                <button type="button" class="template-tab" data-template="classic">
+                    <i class="fa-solid fa-landmark"></i>
+                    <span>Classic Ivy (ATS)</span>
+                </button>
+                <button type="button" class="template-tab" data-template="minimal">
+                    <i class="fa-solid fa-terminal"></i>
+                    <span>Tech Minimalist</span>
+                </button>
+                <button type="button" class="template-tab" data-template="executive">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Executive Sleek</span>
+                </button>
+                <button type="button" class="template-tab" data-template="creative">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Compact Split</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Live Preview Status Bar -->
+        <div class="preview-toolbar no-print">
+            <span class="preview-status">
+                <span class="pulse-dot"></span> Real-time Live Preview
+            </span>
+            <div class="preview-quick-tags">
+                <span class="badge-ats" id="preview-ats-tag"><i class="fa-solid fa-gauge-high"></i> ATS Score: 85%</span>
+                <span class="badge-pages" id="preview-template-name-tag">Template: Modern Clean</span>
+            </div>
+        </div>
+
+        <!-- Printable Resume Sheet Container -->
+        <div class="resume-sheet-wrapper">
+            <article class="resume-sheet template-modern" id="resume-sheet" style="--resume-primary: #2563eb;">
+                
+                <!-- Resume Header -->
+                <header class="resume-header">
+                    <h1 class="resume-name" id="preview-name">Your Full Name</h1>
+                    <div class="resume-title" id="preview-title">Professional Title / Headline</div>
+                    
+                    <div class="resume-contact-bar" id="preview-contact-bar">
+                        <span class="contact-item" id="preview-email-container">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span id="preview-email">email@example.com</span>
+                        </span>
+                        <span class="contact-item" id="preview-phone-container">
+                            <i class="fa-solid fa-phone"></i>
+                            <span id="preview-phone">+91 12345 67890</span>
+                        </span>
+                        <span class="contact-item" id="preview-location-container">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span id="preview-location">City, Country</span>
+                        </span>
+                        <span class="contact-item" id="preview-linkedin-container">
+                            <i class="fa-brands fa-linkedin"></i>
+                            <a href="#" target="_blank" rel="noopener noreferrer" id="preview-linkedin">linkedin.com/in/profile</a>
+                        </span>
+                        <span class="contact-item" id="preview-github-container">
+                            <i class="fa-brands fa-github"></i>
+                            <a href="#" target="_blank" rel="noopener noreferrer" id="preview-github">github.com/profile</a>
+                        </span>
+                    </div>
+                </header>
+
+                <div class="resume-body-grid">
+                    <!-- Main Body Flow -->
+                    <div class="resume-main-column">
+                        
+                        <!-- Section: Summary -->
+                        <section class="resume-section" id="preview-summary-section">
+                            <h2 class="resume-section-title">Professional Summary</h2>
+                            <p class="resume-summary-text" id="preview-summary">
+                                Your professional summary will be displayed here in real time as you type into the form on the left.
+                            </p>
+                        </section>
+
+                        <!-- Section: Experience -->
+                        <section class="resume-section" id="preview-experience-section">
+                            <h2 class="resume-section-title">Experience & Internships</h2>
+                            <div class="resume-items-list" id="preview-experience-list">
+                                <!-- Dynamic experience entries rendered here -->
+                            </div>
+                        </section>
+
+                        <!-- Section: Projects -->
+                        <section class="resume-section" id="preview-projects-section">
+                            <h2 class="resume-section-title">Technical Projects</h2>
+                            <div class="resume-items-list" id="preview-projects-list">
+                                <!-- Dynamic projects entries rendered here -->
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Secondary Column (Adapts based on template layout) -->
+                    <div class="resume-side-column">
+                        
+                        <!-- Section: Education -->
+                        <section class="resume-section" id="preview-education-section">
+                            <h2 class="resume-section-title">Education</h2>
+                            <div class="resume-items-list" id="preview-education-list">
+                                <!-- Dynamic education entries rendered here -->
+                            </div>
+                        </section>
+
+                        <!-- Section: Skills -->
+                        <section class="resume-section" id="preview-skills-section">
+                            <h2 class="resume-section-title">Skills & Technologies</h2>
+                            <div class="resume-skills-tags" id="preview-skills-list">
+                                <!-- Dynamic skills tags rendered here -->
+                            </div>
+                        </section>
+
+                        <!-- Section: Certifications -->
+                        <section class="resume-section" id="preview-certifications-section">
+                            <h2 class="resume-section-title">Certifications</h2>
+                            <div class="resume-items-list" id="preview-certifications-list">
+                                <!-- Dynamic certifications rendered here -->
+                            </div>
+                        </section>
+
+                        <!-- Section: Achievements -->
+                        <section class="resume-section" id="preview-achievements-section">
+                            <h2 class="resume-section-title">Key Achievements</h2>
+                            <ul class="resume-bullet-list" id="preview-achievements-list">
+                                <!-- Dynamic achievements bullet items rendered here -->
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+
+            </article>
+        </div>
+    </section>
+</div>
+{% endblock %}

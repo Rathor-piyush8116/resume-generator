@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ResumeCraft – Resume Generator & AI Optimizer{% endblock %}</title>
+    
+    <!-- Meta tags for SEO & descriptions -->
+    <meta name="description" content="ResumeCraft: ATS-friendly resume builder with live preview, multiple professional templates, AI resume optimization, and SQLite database storage.">
+    
+    <!-- Google Fonts: Inter, Outfit, Merriweather (for Classic), JetBrains Mono (for Tech) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons for clean UI and contact badges -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Main Application Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <!-- Top Navigation Header -->
+    <header class="app-header no-print">
+        <div class="header-content">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-file-invoice"></i>
+                </div>
+                <div>
+                    <h1 class="brand-title">ResumeCraft</h1>
+                    <span class="brand-subtitle">AI-Powered Resume Generator</span>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <!-- AI Optimizer Trigger -->
+                <button type="button" id="btn-open-ats-modal" class="btn btn-ai" title="Check ATS Score & Get AI Recommendations">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI ATS Score <span id="header-ats-pill" class="ats-pill">85%</span>
+                </button>
+
+                <!-- Database Actions -->
+                <button type="button" id="btn-save-resume-db" class="btn btn-secondary" title="Save resume to database">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Resume
+                </button>
+                <button type="button" id="btn-open-my-resumes" class="btn btn-secondary" title="Manage saved resumes">
+                    <i class="fa-solid fa-folder-open"></i> My Resumes (<span id="saved-count-badge">0</span>)
+                </button>
+
+                <!-- Utility Actions -->
+                <button type="button" id="btn-load-sample" class="btn btn-outline-secondary" title="Fill form with sample data">
+                    <i class="fa-solid fa-file-lines"></i> Sample Data
+                </button>
+                <button type="button" id="btn-clear-form" class="btn btn-outline-danger" title="Clear all input fields">
+                    <i class="fa-solid fa-rotate-left"></i> Reset
+                </button>
+                <button type="button" id="btn-print-resume" class="btn btn-primary" title="Print or save as PDF">
+                    <i class="fa-solid fa-print"></i> Print / PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container no-print"></div>
+
+    <!-- Modals (Database, AI Optimization, ATS) -->
+    {% include "modals.html" %}
+
+    <!-- Vanilla JavaScript File -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts_extra %}{% endblock %}
+</body>
+</html>

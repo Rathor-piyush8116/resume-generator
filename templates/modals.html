@@ -1,0 +1,176 @@
+<!-- ==========================================
+     MODALS FOR DATABASE STORAGE & AI OPTIMIZATION
+     ========================================== -->
+
+<!-- 1. SAVE RESUME MODAL -->
+<div id="modal-save-resume" class="modal-backdrop no-print">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-floppy-disk text-primary"></i> Save Resume to Database</h3>
+            <button type="button" class="modal-close" data-close="modal-save-resume">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="save-resume-title">Resume Title / Label</label>
+                <input type="text" id="save-resume-title" placeholder="e.g. Piyush Verma – Software Intern 2024">
+                <small class="helper-text">Give your resume a name to easily identify it later in your saved library.</small>
+            </div>
+            <input type="hidden" id="current-loaded-id" value="">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modal-cancel" data-close="modal-save-resume">Cancel</button>
+            <button type="button" id="btn-confirm-save-resume" class="btn btn-primary">
+                <i class="fa-solid fa-check"></i> Save to SQLite
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 2. MY SAVED RESUMES MODAL -->
+<div id="modal-saved-resumes" class="modal-backdrop no-print">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-folder-open text-primary"></i> My Saved Resumes (SQLite DB)</h3>
+            <button type="button" class="modal-close" data-close="modal-saved-resumes">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="saved-resumes-list" class="saved-resumes-grid">
+                <!-- Dynamically populated from /api/resumes -->
+                <div class="loading-state">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Loading saved resumes...
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close="modal-saved-resumes">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- 3. AI ATS ANALYZER MODAL -->
+<div id="modal-ats-analyzer" class="modal-backdrop no-print">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-chart-pie text-ai"></i> AI ATS Resume Score & Diagnostics</h3>
+            <button type="button" class="modal-close" data-close="modal-ats-analyzer">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="ats-analysis-card">
+                <div class="ats-score-badge-box">
+                    <div class="ats-circle-score" id="ats-modal-score-number">85</div>
+                    <div class="ats-score-info">
+                        <h4 id="ats-modal-rating-title">Excellent (ATS Ready)</h4>
+                        <p class="ats-subtext">Scored against modern applicant tracking algorithms & recruiter parsing standards.</p>
+                    </div>
+                </div>
+
+                <div class="ats-grid-feedback">
+                    <div class="feedback-col strengths-col">
+                        <h5><i class="fa-solid fa-circle-check text-success"></i> Strengths Detected</h5>
+                        <ul id="ats-modal-strengths-list" class="ats-list">
+                            <!-- Populated via JS -->
+                        </ul>
+                    </div>
+                    <div class="feedback-col improvements-col">
+                        <h5><i class="fa-solid fa-triangle-exclamation text-warning"></i> Actionable Improvements</h5>
+                        <ul id="ats-modal-improvements-list" class="ats-list">
+                            <!-- Populated via JS -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close="modal-ats-analyzer">Close</button>
+            <button type="button" id="btn-refresh-ats-score" class="btn btn-ai">
+                <i class="fa-solid fa-rotate"></i> Re-analyze Now
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 4. AI SUMMARY OPTIMIZER MODAL -->
+<div id="modal-ai-summary" class="modal-backdrop no-print">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-wand-magic-sparkles text-ai"></i> AI Professional Summary Optimizer</h3>
+            <button type="button" class="modal-close" data-close="modal-ai-summary">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-instruction">Select the tone and style that best represents your career goals. Click <strong>"Use This Summary"</strong> to automatically update your form and live preview.</p>
+            
+            <div id="ai-summary-cards-container" class="ai-suggestions-list">
+                <!-- Generated dynamically via /api/ai/optimize-summary -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close="modal-ai-summary">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- 5. AI SKILL SUGGESTER MODAL -->
+<div id="modal-ai-skills" class="modal-backdrop no-print">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-lightbulb text-ai"></i> AI In-Demand Skills Explorer</h3>
+            <button type="button" class="modal-close" data-close="modal-ai-skills">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="role-selector-bar">
+                <label for="ai-role-select">Select Target Role or Domain:</label>
+                <select id="ai-role-select" class="form-select">
+                    <option value="software">Software Engineering (General / C++ / Python)</option>
+                    <option value="web">Full Stack Web Development</option>
+                    <option value="frontend">Frontend Web Development (React / UI)</option>
+                    <option value="backend">Backend & API Engineering (Python / Node / SQL)</option>
+                    <option value="data">Data Analytics & Visualization</option>
+                    <option value="machine learning">Machine Learning & AI Engineering</option>
+                    <option value="cloud">Cloud, DevOps & Linux Infrastructure</option>
+                </select>
+            </div>
+
+            <div class="skill-chips-selection-box">
+                <p class="section-hint">Click any skill pill below to select/unselect it:</p>
+                <div id="ai-suggested-skills-pills" class="skills-selectable-grid">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close="modal-ai-skills">Cancel</button>
+            <button type="button" id="btn-apply-selected-skills" class="btn btn-ai">
+                <i class="fa-solid fa-plus"></i> Add Selected to Resume
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 6. AI BULLET POINT POLISH MODAL -->
+<div id="modal-ai-bullet" class="modal-backdrop no-print">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-sparkles text-ai"></i> AI Bullet Point Polisher</h3>
+            <button type="button" class="modal-close" data-close="modal-ai-bullet">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-instruction">Rewrites simple descriptions into high-impact, action-verb driven bullets with quantifiable metrics.</p>
+            <div class="form-group">
+                <label>Current Description / Raw Draft:</label>
+                <textarea id="ai-bullet-input" rows="2" placeholder="e.g. worked on backend APIs and fixed database bugs"></textarea>
+            </div>
+            <div class="ai-bullet-suggestions-box">
+                <label>Choose an Optimized Variation:</label>
+                <div id="ai-bullet-variants-list" class="bullet-variants-list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close="modal-ai-bullet">Cancel</button>
+            <button type="button" id="btn-generate-bullet-variants" class="btn btn-ai">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Variants
+            </button>
+        </div>
+    </div>
+</div>
